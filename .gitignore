@@ -1,0 +1,66 @@
+# === Python System & Caches ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# === Environments (Virtual Environments) ===
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# === Testing & Coverage ===
+.htmlcov/
+.tox/
+.nosetests/
+.pytest_cache/
+vcr_cassettes/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# === Streamlit Specific ===
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# === Security & Local Credentials (CRITICAL) ===
+# Jangan pernah mengunggah kunci enkripsi, token API, atau konfigurasi siber lokal
+*.pem
+*.key
+*.secret
+secrets.json
+.env.local
+.env.*.local
+
+# === OS & Editors ===
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

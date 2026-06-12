@@ -1,0 +1,15 @@
+# --- Core Framework & UI ---
+streamlit==1.35.0
+
+# --- Mathematical & Graph Utilities (For ADT) ---
+networkx==3.3
+numpy==1.26.4
+
+# --- Testing & Quality Assurance (For CI Pipeline) ---
+pytest==8.2.1
+flake8==7.0.0
+black==24.4.2
+
+# --- Security Auditing Tools (For CI Pipeline) ---
+bandit==1.7.8
+pip-audit==2.7.2

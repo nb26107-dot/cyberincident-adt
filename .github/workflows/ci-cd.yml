@@ -1,0 +1,52 @@
+# Pemicu jalannya otomatisasi pipeline
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  audit-and-test:
+    name: Code Audit, Security Scan & Unit Test
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Mengambil kode dari repositori GitHub ke server runner
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. Setup lingkungan Python yang bersih dan terisolasi
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip' # Menghemat waktu build dengan memanfaatkan cache
+
+    # 3. Memasang semua dependensi yang tercatat di requirements.txt
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. TAHAP KUALITAS KODE: Memeriksa kerapian penulisan skrip (PEP 8)
+    - name: Lint with flake8
+      run: |
+        # Berhenti jika ada kesalahan sintaksis atau error fatal
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Peringatan untuk gaya penulisan kode yang kurang rapi
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    # 5. TAHAP AUDIT DEPENDENSI: Memeriksa apakah library yang dipakai punya celah keamanan
+    - name: Dependency Security Audit (pip-audit)
+      run: |
+        pip-audit
+
+    # 6. TAHAP AUDIT KODE: Memindai celah keamanan pada logika Python buatanmu
+    - name: Static Application Security Testing (Bandit)
+      run: |
+        bandit -r src/
+
+    # 7. TAHAP PENGUJIAN OTOMATIS: Memastikan logika kalkulasi ADT akurat dan tidak salah hitung
+    - name: Run Automated Tests (pytest)
+      run: |
+        pytest
